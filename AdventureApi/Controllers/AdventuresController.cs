@@ -23,10 +23,17 @@ namespace AdventureApi.Controllers {
         }
 
 
+        [Authorize]
         [HttpGet("{name}")]
         public async Task<IActionResult> GetByName(string name) {
             var adventure = await _adventuresService.GetByName(name);
             return Ok(adventure);
+        }
+
+        [Authorize]
+        [Route("initial/{id}")]
+        public async Task<IActionResult> GetInitialLocation(string id) {
+            return Ok();
         }
     }
 }
