@@ -36,7 +36,7 @@ namespace AdventureApi.Controllers {
         }
 
         [Authorize]
-        [Route("initial/{id}")]
+        [Route("initiallocation/{id}")]
         public IActionResult GetInitialLocation(string id) {
             return Ok(_locationService.GetInitialForLocation(id));
         }
