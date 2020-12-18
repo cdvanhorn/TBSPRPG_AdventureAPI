@@ -3,6 +3,9 @@ using AdventureApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
+using System.Collections.Generic;
+
+using AdventureApi.Entities;
 
 namespace AdventureApi.Controllers {
 
@@ -10,9 +13,11 @@ namespace AdventureApi.Controllers {
     [Route("/api/[controller]")]
     public class AdventuresController : ControllerBase {
         IAdventuresService _adventuresService;
+        ILocationService _locationService;
 
-        public AdventuresController(IAdventuresService adventuresService) {
+        public AdventuresController(IAdventuresService adventuresService, ILocationService locationService) {
             _adventuresService = adventuresService;
+            _locationService = locationService;
         }
 
         [HttpGet]
@@ -32,8 +37,8 @@ namespace AdventureApi.Controllers {
 
         [Authorize]
         [Route("initial/{id}")]
-        public async Task<IActionResult> GetInitialLocation(string id) {
-            return Ok();
+        public IActionResult GetInitialLocation(string id) {
+            return Ok(_locationService.GetInitialForLocation(id));
         }
     }
 }

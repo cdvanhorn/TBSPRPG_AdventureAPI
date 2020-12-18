@@ -11,7 +11,7 @@ using TbspRpgLib.Settings;
 
 namespace AdventureApi.Repositories {
     public interface ILocationRepository {
-        Location GetInitialForAdventure(string id);
+        IAsyncEnumerable<Location> GetInitialForAdventure(string id);
     }
 
     public class LocationRepository : ILocationRepository {
@@ -29,12 +29,13 @@ namespace AdventureApi.Repositories {
             _adventures = database.GetCollection<Adventure>("adventures");
         }
 
-        public Location GetInitialForAdventure(string id) {
-            var adventure = _adventures.Find(adv => adv.Id == id).FirstOrDefault();
-            if(adventure == null) {
-                return null;
-            }
-            return adventure.Locations.Where(loc => loc.Initial).FirstOrDefault();
+        public IAsyncEnumerable<Location> GetInitialForAdventure(string id) {
+            var location = from adv in _adventures.AsQueryable()
+                            from loc in adv.Locations
+                            where adv.Id == id
+                            where loc.Initial
+                            select loc;
+            return location.ToAsyncEnumerable();
         }
     }
 }

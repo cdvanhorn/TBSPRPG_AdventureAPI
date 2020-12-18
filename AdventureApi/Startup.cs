@@ -37,6 +37,8 @@ namespace AdventureApi
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IAdventuresService, AdventuresService>();
             services.AddScoped<IAdventuresRepository, AdventuresRepository>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
 
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
             services.AddSingleton<IDatabaseSettings>(sp =>
