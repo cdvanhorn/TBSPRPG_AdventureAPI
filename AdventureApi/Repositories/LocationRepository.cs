@@ -8,25 +8,18 @@ using System.Threading.Tasks;
 using System.Linq;
 
 using TbspRpgLib.Settings;
+using TbspRpgLib.Repositories;
 
 namespace AdventureApi.Repositories {
     public interface ILocationRepository {
         IAsyncEnumerable<Location> GetInitialForAdventure(string id);
     }
 
-    public class LocationRepository : ILocationRepository {
-        private readonly IDatabaseSettings _dbSettings;
-
+    public class LocationRepository : MongoRepository, ILocationRepository {
         private readonly IMongoCollection<Adventure> _adventures;
 
-        public LocationRepository(IDatabaseSettings databaseSettings) {
-            _dbSettings = databaseSettings;
-
-            var connectionString = $"mongodb+srv://{_dbSettings.Username}:{_dbSettings.Password}@{_dbSettings.Url}/{_dbSettings.Name}?retryWrites=true&w=majority";
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase(_dbSettings.Name);
-
-            _adventures = database.GetCollection<Adventure>("adventures");
+        public LocationRepository(IDatabaseSettings databaseSettings) : base(databaseSettings) {
+            _adventures = _mongoDatabase.GetCollection<Adventure>("adventures");
         }
 
         public IAsyncEnumerable<Location> GetInitialForAdventure(string id) {
