@@ -34,23 +34,11 @@ namespace AdventureApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IEventService, EventService>();
+            TbspRpgLib.LibStartup.ConfigureTbspRpgServices(Configuration, services);
             services.AddScoped<IAdventuresService, AdventuresService>();
             services.AddScoped<IAdventuresRepository, AdventuresRepository>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILocationRepository, LocationRepository>();
-
-            services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
-            services.AddSingleton<IDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-                
-            services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
-            services.AddSingleton<IJwtSettings>(sp =>
-                sp.GetRequiredService<IOptions<JwtSettings>>().Value);
-            
-            services.Configure<EventStoreSettings>(Configuration.GetSection("EventStore"));
-            services.AddSingleton<IEventStoreSettings>(sp =>
-                sp.GetRequiredService<IOptions<EventStoreSettings>>().Value);
 
             //start workers
             //services.AddHostedService<MyNewGameEventProcessor>();
@@ -68,7 +56,7 @@ namespace AdventureApi
 
             app.UseRouting();
 
-            app.UseMiddleware<JwtMiddleware>();
+            TbspRpgLib.LibStartup.ConfigureTbspRpg(app);
 
             //app.UseAuthorization();
 
