@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 using AdventureApi.Entities;
 
+using System;
+
 namespace AdventureApi.Controllers {
 
     [ApiController]
@@ -27,8 +29,6 @@ namespace AdventureApi.Controllers {
             return Ok(adventures);
         }
 
-
-        [Authorize]
         [HttpGet("{name}")]
         public async Task<IActionResult> GetByName(string name) {
             var adventure = await _adventuresService.GetByName(name);
