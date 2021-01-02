@@ -13,6 +13,7 @@ namespace AdventureApi.Repositories {
     public interface IAdventuresRepository {
         Task<List<Adventure>> GetAllAdventures();
         Task<Adventure> GetAdventureByName(string name);
+        Task<Adventure> GetAdventureById(string id);
     }
 
     public class AdventuresRepository : MongoRepository, IAdventuresRepository {
@@ -24,6 +25,10 @@ namespace AdventureApi.Repositories {
 
         public Task<List<Adventure>> GetAllAdventures() {
             return _adventures.Find(adventure => true).ToListAsync();
+        }
+
+        public Task<Adventure> GetAdventureById(string id) {
+            return _adventures.Find(adv => adv.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<Adventure> GetAdventureByName(string name) {

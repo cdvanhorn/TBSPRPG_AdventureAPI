@@ -35,10 +35,12 @@ namespace AdventureApi.Controllers {
             return Ok(adventure);
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("initiallocation/{id}")]
         public IActionResult GetInitialLocation(string id) {
-            return Ok(_locationService.GetInitialForLocation(id));
+            _locationService.GetInitialForLocation(id);
+            //return Ok(_locationService.GetInitialForLocation(id));
+            return Ok("banana");
         }
     }
 }
