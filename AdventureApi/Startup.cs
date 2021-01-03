@@ -37,8 +37,10 @@ namespace AdventureApi
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILocationRepository, LocationRepository>();
 
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
             services.AddDbContext<AdventureContext>(
-                options => options.UseNpgsql(Configuration.GetConnectionString("TbspRpgDev"))
+                options => options.UseNpgsql(connectionString)
             );
 
             //start workers
