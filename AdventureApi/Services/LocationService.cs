@@ -17,7 +17,7 @@ namespace AdventureApi.Services {
         }
 
         public IAsyncEnumerable<Location> GetInitialForLocation(string id) {
-            return _locationRepository.GetInitialForAdventure(id);
+            return null;
         }
     }
 }

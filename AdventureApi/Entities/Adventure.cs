@@ -6,6 +6,6 @@ namespace AdventureApi.Entities {
 
         public string Name { get; set; }
 
-        //public List<Location> Locations { get; set; }
+        public ICollection<Location> Locations { get; set; }
     }
 }
