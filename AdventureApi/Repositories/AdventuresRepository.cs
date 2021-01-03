@@ -16,23 +16,23 @@ namespace AdventureApi.Repositories {
         Task<Adventure> GetAdventureById(string id);
     }
 
-    public class AdventuresRepository : MongoRepository, IAdventuresRepository {
-        private readonly IMongoCollection<Adventure> _adventures;
+    public class AdventuresRepository : IAdventuresRepository {
+        private AdventureContext _context;
 
-        public AdventuresRepository(IDatabaseSettings databaseSettings) : base(databaseSettings) {
-            _adventures = _mongoDatabase.GetCollection<Adventure>("adventures");
+        public AdventuresRepository(AdventureContext context) {
+            _context = context;
         }
 
         public Task<List<Adventure>> GetAllAdventures() {
-            return _adventures.Find(adventure => true).ToListAsync();
+            return null;
         }
 
         public Task<Adventure> GetAdventureById(string id) {
-            return _adventures.Find(adv => adv.Id == id).FirstOrDefaultAsync();
+            return null;
         }
 
         public Task<Adventure> GetAdventureByName(string name) {
-            return _adventures.Find(adventure => adventure.Name.ToLower() == name.ToLower()).FirstOrDefaultAsync();
+            return null;
         }
     }
 }

@@ -11,10 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
-using TbspRpgLib.Jwt;
-using TbspRpgLib.Settings;
-using TbspRpgLib.Events;
+using Microsoft.EntityFrameworkCore;
 
 using AdventureApi.Services;
 using AdventureApi.Repositories;
@@ -39,6 +36,10 @@ namespace AdventureApi
             services.AddScoped<IAdventuresRepository, AdventuresRepository>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+
+            services.AddDbContext<AdventureContext>(
+                options => options.UseNpgsql(Configuration.GetConnectionString("TbspRpgDev"))
+            );
 
             //start workers
             //services.AddHostedService<MyNewGameEventProcessor>();

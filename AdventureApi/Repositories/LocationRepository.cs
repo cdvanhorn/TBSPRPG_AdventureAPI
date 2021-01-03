@@ -30,16 +30,16 @@ namespace AdventureApi.Repositories {
             //                 where loc.Initial
             //                 select loc;
 
-            var filter = Builders<Adventure>.Filter.Eq(adv => adv.Id, id)
-                & Builders<Adventure>.Filter.Eq("Locations.Initial", true);
-            var projection = Builders<Adventure>.Projection.Include("Locations");
-            var adventures = _adventures.Find(filter).Project(projection);
+            // var filter = Builders<Adventure>.Filter.Eq(adv => adv.Id, id)
+            //     & Builders<Adventure>.Filter.Eq("Locations.Initial", true);
+            // var projection = Builders<Adventure>.Projection.Include("Locations");
+            // var adventures = _adventures.Find(filter).Project(projection);
             
 
-            foreach(var adv in adventures.ToList()) {
-                //BsonSerializer.Deserialize<Location>(adv.GetElement("locations"));
-                Console.WriteLine(adv.GetElement("locations"));
-            }
+            // foreach(var adv in adventures.ToList()) {
+            //     //BsonSerializer.Deserialize<Location>(adv.GetElement("locations"));
+            //     Console.WriteLine(adv.GetElement("locations"));
+            // }
 
 
             // foreach(var adv in adventure.ToList()) {
