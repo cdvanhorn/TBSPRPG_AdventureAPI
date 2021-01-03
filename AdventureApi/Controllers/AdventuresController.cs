@@ -3,9 +3,10 @@ using AdventureApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using System.Linq;
 
 using AdventureApi.Entities;
+using AdventureApi.ViewModels;
 
 using System;
 
@@ -26,21 +27,24 @@ namespace AdventureApi.Controllers {
         public async Task<IActionResult> GetAll()
         {
             var adventures = await _adventuresService.GetAll();
-            return Ok(adventures);
+            return Ok(adventures.Select(adv => new AdventureViewModel(adv)).ToList());
         }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetByName(string name) {
             var adventure = await _adventuresService.GetByName(name);
-            return Ok(adventure);
+            if(adventure == null)
+                return BadRequest(new { message = "invalid adventure name" });
+            return Ok(new AdventureViewModel(adventure));
         }
 
         //[Authorize]
         [Route("initiallocation/{id}")]
-        public IActionResult GetInitialLocation(int id) {
-            _locationService.GetInitialForLocation(id);
-            return Ok("banana");
-            //return Ok(_locationService.GetInitialForLocation(id));
+        public async Task<IActionResult> GetInitialLocation(int id) {
+            Location loc = await _locationService.GetInitialForLocation(id);
+            if(loc == null)
+                return BadRequest(new { message = "invalid game id" });
+            return Ok(new LocationViewModel(loc));
         }
     }
 }

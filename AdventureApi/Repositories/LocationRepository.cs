@@ -28,13 +28,7 @@ namespace AdventureApi.Repositories {
                             where loc.AdventureId == adventureId
                             where loc.Initial
                             select loc;
-            foreach(var location in locations.ToList()) {
-                Console.WriteLine(location.Id);
-                Console.WriteLine(location.AdventureId);
-                Console.WriteLine(location.Initial);
-            }
-            return null;
-            //return location.FirstOrDefaultAsync();
+            return locations.FirstOrDefaultAsync();
         }
     }
 }
