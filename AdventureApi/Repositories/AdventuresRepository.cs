@@ -1,8 +1,9 @@
 using AdventureApi.Entities;
 
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace AdventureApi.Repositories {
     public interface IAdventuresRepository {
         Task<List<Adventure>> GetAllAdventures();
         Task<Adventure> GetAdventureByName(string name);
-        Task<Adventure> GetAdventureById(string id);
+        ValueTask<Adventure> GetAdventureById(int id);
     }
 
     public class AdventuresRepository : IAdventuresRepository {
@@ -24,15 +25,18 @@ namespace AdventureApi.Repositories {
         }
 
         public Task<List<Adventure>> GetAllAdventures() {
-            return null;
+            return _context.Adventures.AsQueryable().ToListAsync<Adventure>();
         }
 
-        public Task<Adventure> GetAdventureById(string id) {
-            return null;
+        public ValueTask<Adventure> GetAdventureById(int id) {
+            return _context.Adventures.FindAsync(id);
         }
 
         public Task<Adventure> GetAdventureByName(string name) {
-            return null;
+            var adventures = from adventure in _context.Adventures.AsQueryable()
+                            where adventure.Name.ToLower() == name.ToLower()
+                            select adventure;
+            return adventures.FirstOrDefaultAsync<Adventure>();
         }
     }
 }

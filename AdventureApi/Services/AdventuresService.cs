@@ -10,6 +10,7 @@ namespace AdventureApi.Services {
     public interface IAdventuresService {
         Task<List<Adventure>> GetAll();
         Task<Adventure> GetByName(string name);
+        ValueTask<Adventure> GetById(int id);
     }
 
     public class AdventuresService : IAdventuresService {
@@ -25,6 +26,10 @@ namespace AdventureApi.Services {
 
         public Task<Adventure> GetByName(string name) {
             return _adventuresRespository.GetAdventureByName(name);
+        }
+
+        public ValueTask<Adventure> GetById(int id) {
+            return _adventuresRespository.GetAdventureById(id);
         }
     }
 }
