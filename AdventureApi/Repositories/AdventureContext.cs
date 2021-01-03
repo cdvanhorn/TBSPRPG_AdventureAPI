@@ -15,8 +15,9 @@ namespace AdventureApi.Repositories {
             modelBuilder.Entity<Location>().ToTable("AdventureService.Location");
 
             modelBuilder.Entity<Adventure>()
-                .HasMany(a => a.Locations)
-                .WithOne(l => l.Adventure);
+                 .HasMany(a => a.Locations)
+                 .WithOne(l => l.Adventure)
+                 .HasForeignKey(l => l.AdventureId);
         }
     }
 }

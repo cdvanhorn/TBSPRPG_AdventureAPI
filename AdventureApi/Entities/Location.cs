@@ -7,6 +7,8 @@ namespace AdventureApi.Entities {
 
         public bool Initial { get; set; }
 
+        public int AdventureId { get; set; }
+
         public Adventure Adventure { get; set; }
     }
 }

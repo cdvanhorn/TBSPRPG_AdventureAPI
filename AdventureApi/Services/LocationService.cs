@@ -2,11 +2,11 @@ using AdventureApi.Repositories;
 
 using AdventureApi.Entities;
 
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventureApi.Services {
     public interface ILocationService {
-        IAsyncEnumerable<Location> GetInitialForLocation(string id);
+        Task<Location> GetInitialForLocation(int id);
     }
 
     public class LocationService : ILocationService{
@@ -16,8 +16,8 @@ namespace AdventureApi.Services {
             _locationRepository = locationRepository;
         }
 
-        public IAsyncEnumerable<Location> GetInitialForLocation(string id) {
-            return null;
+        public Task<Location> GetInitialForLocation(int id) {
+            return _locationRepository.GetInitialForAdventure(id);
         }
     }
 }

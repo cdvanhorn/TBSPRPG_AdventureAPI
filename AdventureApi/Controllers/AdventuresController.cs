@@ -37,10 +37,10 @@ namespace AdventureApi.Controllers {
 
         //[Authorize]
         [Route("initiallocation/{id}")]
-        public IActionResult GetInitialLocation(string id) {
+        public IActionResult GetInitialLocation(int id) {
             _locationService.GetInitialForLocation(id);
-            //return Ok(_locationService.GetInitialForLocation(id));
             return Ok("banana");
+            //return Ok(_locationService.GetInitialForLocation(id));
         }
     }
 }
