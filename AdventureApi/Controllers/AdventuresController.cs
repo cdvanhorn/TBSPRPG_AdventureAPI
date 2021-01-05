@@ -26,8 +26,7 @@ namespace AdventureApi.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var adventures = await _adventuresService.GetAll();
-            return Ok(adventures.Select(adv => new AdventureViewModel(adv)).ToList());
+            return Ok(await _adventuresService.GetAll());
         }
 
         [HttpGet("{name}")]
@@ -35,16 +34,16 @@ namespace AdventureApi.Controllers {
             var adventure = await _adventuresService.GetByName(name);
             if(adventure == null)
                 return BadRequest(new { message = "invalid adventure name" });
-            return Ok(new AdventureViewModel(adventure));
+            return Ok(adventure);
         }
 
         //[Authorize]
         [Route("initiallocation/{id}")]
         public async Task<IActionResult> GetInitialLocation(int id) {
-            Location loc = await _locationService.GetInitialForLocation(id);
+            var loc = await _locationService.GetInitialForLocation(id);
             if(loc == null)
                 return BadRequest(new { message = "invalid game id" });
-            return Ok(new LocationViewModel(loc));
+            return Ok(loc);
         }
     }
 }

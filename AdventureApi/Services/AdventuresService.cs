@@ -3,14 +3,16 @@ using AdventureApi.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 using AdventureApi.Repositories;
+using AdventureApi.ViewModels;
 
 namespace AdventureApi.Services {
     public interface IAdventuresService {
-        Task<List<Adventure>> GetAll();
-        Task<Adventure> GetByName(string name);
-        ValueTask<Adventure> GetById(int id);
+        Task<List<AdventureViewModel>> GetAll();
+        Task<AdventureViewModel> GetByName(string name);
+        ValueTask<AdventureViewModel> GetById(int id);
     }
 
     public class AdventuresService : IAdventuresService {
@@ -20,16 +22,23 @@ namespace AdventureApi.Services {
             _adventuresRespository = adventuresRepository;
         }
         
-        public Task<List<Adventure>> GetAll() {
-            return _adventuresRespository.GetAllAdventures();
+        public async Task<List<AdventureViewModel>> GetAll() {
+            var adventures = await _adventuresRespository.GetAllAdventures();
+            return adventures.Select(adv => new AdventureViewModel(adv)).ToList();
         }
 
-        public Task<Adventure> GetByName(string name) {
-            return _adventuresRespository.GetAdventureByName(name);
+        public async Task<AdventureViewModel> GetByName(string name) {
+            var adventure = await _adventuresRespository.GetAdventureByName(name);
+            if(adventure == null)
+                return null;
+            return new AdventureViewModel(adventure);
         }
 
-        public ValueTask<Adventure> GetById(int id) {
-            return _adventuresRespository.GetAdventureById(id);
+        public async ValueTask<AdventureViewModel> GetById(int id) {
+            var adventure = await _adventuresRespository.GetAdventureById(id);
+            if(adventure == null)
+                return null;
+            return new AdventureViewModel(adventure);
         }
     }
 }

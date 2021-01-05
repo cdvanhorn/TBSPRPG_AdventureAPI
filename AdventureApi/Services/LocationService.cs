@@ -1,12 +1,12 @@
 using AdventureApi.Repositories;
-
+using AdventureApi.ViewModels;
 using AdventureApi.Entities;
 
 using System.Threading.Tasks;
 
 namespace AdventureApi.Services {
     public interface ILocationService {
-        Task<Location> GetInitialForLocation(int id);
+        Task<LocationViewModel> GetInitialForLocation(int id);
     }
 
     public class LocationService : ILocationService{
@@ -16,8 +16,11 @@ namespace AdventureApi.Services {
             _locationRepository = locationRepository;
         }
 
-        public Task<Location> GetInitialForLocation(int id) {
-            return _locationRepository.GetInitialForAdventure(id);
+        public async Task<LocationViewModel> GetInitialForLocation(int id) {
+            var location = await _locationRepository.GetInitialForAdventure(id);
+            if(location == null)
+                return null;
+            return new LocationViewModel(location);
         }
     }
 }
