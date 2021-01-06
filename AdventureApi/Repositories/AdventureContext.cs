@@ -13,8 +13,8 @@ namespace AdventureApi.Repositories {
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
 
-            modelBuilder.Entity<Adventure>().ToTable("AdventureService.Adventure");
-            modelBuilder.Entity<Location>().ToTable("AdventureService.Location");
+            modelBuilder.Entity<Adventure>().ToTable("adventures");
+            modelBuilder.Entity<Location>().ToTable("locations");
 
             modelBuilder.Entity<Adventure>().HasKey(a => a.Id);
             modelBuilder.Entity<Adventure>().Property(a => a.Id)
