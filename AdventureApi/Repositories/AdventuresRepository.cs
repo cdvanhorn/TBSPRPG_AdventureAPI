@@ -14,7 +14,7 @@ namespace AdventureApi.Repositories {
     public interface IAdventuresRepository {
         Task<List<Adventure>> GetAllAdventures();
         Task<Adventure> GetAdventureByName(string name);
-        ValueTask<Adventure> GetAdventureById(int id);
+        Task<Adventure> GetAdventureById(Guid id);
     }
 
     public class AdventuresRepository : IAdventuresRepository {
@@ -28,8 +28,8 @@ namespace AdventureApi.Repositories {
             return _context.Adventures.AsQueryable().ToListAsync<Adventure>();
         }
 
-        public ValueTask<Adventure> GetAdventureById(int id) {
-            return _context.Adventures.FindAsync(id);
+        public Task<Adventure> GetAdventureById(Guid id) {
+            return _context.Adventures.AsQueryable().Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<Adventure> GetAdventureByName(string name) {

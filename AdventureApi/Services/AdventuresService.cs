@@ -12,7 +12,7 @@ namespace AdventureApi.Services {
     public interface IAdventuresService {
         Task<List<AdventureViewModel>> GetAll();
         Task<AdventureViewModel> GetByName(string name);
-        ValueTask<AdventureViewModel> GetById(int id);
+        ValueTask<AdventureViewModel> GetById(string id);
     }
 
     public class AdventuresService : IAdventuresService {
@@ -34,8 +34,10 @@ namespace AdventureApi.Services {
             return new AdventureViewModel(adventure);
         }
 
-        public async ValueTask<AdventureViewModel> GetById(int id) {
-            var adventure = await _adventuresRespository.GetAdventureById(id);
+        public async ValueTask<AdventureViewModel> GetById(string id) {
+            if(!Guid.TryParse(id, out _))
+                return null;
+            var adventure = await _adventuresRespository.GetAdventureById(Guid.Parse(id));
             if(adventure == null)
                 return null;
             return new AdventureViewModel(adventure);

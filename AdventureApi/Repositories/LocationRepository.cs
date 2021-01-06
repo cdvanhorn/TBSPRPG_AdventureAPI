@@ -12,7 +12,7 @@ using TbspRpgLib.Repositories;
 
 namespace AdventureApi.Repositories {
     public interface ILocationRepository {
-        Task<Location> GetInitialForAdventure(int id);
+        Task<Location> GetInitialForAdventure(Guid id);
     }
 
     public class LocationRepository : ILocationRepository {
@@ -22,7 +22,7 @@ namespace AdventureApi.Repositories {
             _context = context;
         }
 
-        public Task<Location> GetInitialForAdventure(int adventureId) {
+        public Task<Location> GetInitialForAdventure(Guid adventureId) {
             //var locations = _context.Locations.FirstOrDefaultAsync();
             var locations = from loc in _context.Locations.AsQueryable()
                             where loc.AdventureId == adventureId

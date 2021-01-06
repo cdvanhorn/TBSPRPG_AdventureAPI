@@ -1,13 +1,12 @@
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace AdventureApi.Entities {
     public class Location {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public bool Initial { get; set; }
 
-        public int AdventureId { get; set; }
+        public Guid AdventureId { get; set; }
 
         public Adventure Adventure { get; set; }
     }
