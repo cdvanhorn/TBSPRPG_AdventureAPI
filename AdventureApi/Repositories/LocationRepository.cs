@@ -3,12 +3,8 @@ using AdventureApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-
-using TbspRpgLib.Settings;
-using TbspRpgLib.Repositories;
 
 namespace AdventureApi.Repositories {
     public interface ILocationRepository {
@@ -16,7 +12,7 @@ namespace AdventureApi.Repositories {
     }
 
     public class LocationRepository : ILocationRepository {
-        private AdventureContext _context;
+        private readonly AdventureContext _context;
 
         public LocationRepository(AdventureContext context) {
             _context = context;

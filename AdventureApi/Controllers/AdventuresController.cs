@@ -3,20 +3,14 @@ using AdventureApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
-using System.Linq;
-
-using AdventureApi.Entities;
-using AdventureApi.ViewModels;
-
-using System;
 
 namespace AdventureApi.Controllers {
 
     [ApiController]
     [Route("/api/[controller]")]
     public class AdventuresController : ControllerBase {
-        IAdventuresService _adventuresService;
-        ILocationService _locationService;
+        private readonly IAdventuresService _adventuresService;
+        private readonly ILocationService _locationService;
 
         public AdventuresController(IAdventuresService adventuresService, ILocationService locationService) {
             _adventuresService = adventuresService;

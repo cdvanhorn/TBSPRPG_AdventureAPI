@@ -11,7 +11,7 @@ namespace AdventureApi.Services {
     }
 
     public class LocationService : ILocationService{
-        private ILocationRepository _locationRepository;
+        private readonly ILocationRepository _locationRepository;
 
         public LocationService(ILocationRepository locationRepository) {
             _locationRepository = locationRepository;
@@ -21,9 +21,7 @@ namespace AdventureApi.Services {
             if(!Guid.TryParse(id, out _))
                 return null;
             var location = await _locationRepository.GetInitialForAdventure(Guid.Parse(id));
-            if(location == null)
-                return null;
-            return new LocationViewModel(location);
+            return location == null ? null : new LocationViewModel(location);
         }
     }
 }

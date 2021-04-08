@@ -18,14 +18,14 @@ namespace AdventureApi.Repositories {
     }
 
     public class AdventuresRepository : IAdventuresRepository {
-        private AdventureContext _context;
+        private readonly AdventureContext _context;
 
         public AdventuresRepository(AdventureContext context) {
             _context = context;
         }
 
         public Task<List<Adventure>> GetAllAdventures() {
-            return _context.Adventures.AsQueryable().ToListAsync<Adventure>();
+            return _context.Adventures.AsQueryable().ToListAsync();
         }
 
         public Task<Adventure> GetAdventureById(Guid id) {
@@ -36,7 +36,7 @@ namespace AdventureApi.Repositories {
             var adventures = from adventure in _context.Adventures.AsQueryable()
                             where adventure.Name.ToLower() == name.ToLower()
                             select adventure;
-            return adventures.FirstOrDefaultAsync<Adventure>();
+            return adventures.FirstOrDefaultAsync();
         }
     }
 }
