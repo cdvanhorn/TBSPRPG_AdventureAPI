@@ -10,6 +10,8 @@ namespace AdventureApi.Tests.Repositories
     public class AdventureRepositoryTests : InMemoryTest
     {
         #region Seeding
+
+        private Guid _testAdventureId;
         public AdventureRepositoryTests()
         {
             Seed();
@@ -26,6 +28,7 @@ namespace AdventureApi.Tests.Repositories
                 Id = Guid.NewGuid(),
                 Name = "TestOne"
             };
+            _testAdventureId = adv.Id;
 
             var advTwo = new Adventure
             {
@@ -51,6 +54,82 @@ namespace AdventureApi.Tests.Repositories
             
             //assert
             Assert.Equal(2, adventures.Count);
+            Assert.Equal("TestOne", adventures[0].Name);
+            Assert.Equal("TestTwo", adventures[1].Name);
+        }
+        #endregion
+        
+        #region GetAdventureByName
+        [Fact]
+        public async Task GetAdventureByName_ReturnAdventure()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var adventureRepository = new AdventuresRepository(context);
+            
+            //act
+            var adventure = await adventureRepository.GetAdventureByName("TestOne");
+            
+            //assert
+            Assert.Equal("TestOne", adventure.Name);
+        }
+        
+        [Fact]
+        public async Task GetAdventureByName_CaseInsensitive_ReturnAdventure()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var adventureRepository = new AdventuresRepository(context);
+            
+            //act
+            var adventure = await adventureRepository.GetAdventureByName("testTWO");
+            
+            //assert
+            Assert.Equal("TestTwo", adventure.Name);
+        }
+        
+        [Fact]
+        public async Task GetAdventureByName_InvalidName_ReturnNothing()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var adventureRepository = new AdventuresRepository(context);
+            
+            //act
+            var adventure = await adventureRepository.GetAdventureByName("invalid");
+            
+            //assert
+            Assert.Null(adventure);
+        }
+        #endregion
+        
+        #region GetAdventureById
+        [Fact]
+        public async Task GetAdventureById_ReturnAdventure()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var adventureRepository = new AdventuresRepository(context);
+            
+            //act
+            var adventure = await adventureRepository.GetAdventureById(_testAdventureId);
+            
+            //assert
+            Assert.Equal("TestOne", adventure.Name);
+        }
+        
+        [Fact]
+        public async Task GetAdventureById_Invalid_ReturnNothing()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var adventureRepository = new AdventuresRepository(context);
+            
+            //act
+            var adventure = await adventureRepository.GetAdventureById(Guid.NewGuid());
+            
+            //assert
+            Assert.Null(adventure);
         }
         #endregion
     }
