@@ -12,7 +12,7 @@ namespace AdventureApi.Tests.Repositories
         #region Seeding
 
         private Guid _testAdventureId;
-        public AdventureRepositoryTests()
+        public AdventureRepositoryTests() : base("AdventureRepositoryTests")
         {
             Seed();
         }

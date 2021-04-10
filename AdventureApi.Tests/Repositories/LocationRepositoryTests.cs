@@ -13,7 +13,7 @@ namespace AdventureApi.Tests.Repositories
         private Guid _testAdventureId;
         private Guid _testAdventure2Id;
         private Guid _testAdventure3Id;
-        public LocationRepositoryTests()
+        public LocationRepositoryTests() : base("LocationRepositoryTests")
         {
             Seed();
         }

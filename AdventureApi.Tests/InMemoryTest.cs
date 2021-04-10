@@ -7,10 +7,10 @@ namespace AdventureApi.Tests
     {
         protected readonly DbContextOptions<AdventureContext> _dbContextOptions;
 
-        protected InMemoryTest()
+        protected InMemoryTest(string dbName)
         {
             _dbContextOptions = new DbContextOptionsBuilder<AdventureContext>()
-                    .UseInMemoryDatabase("AdventureDatabase")
+                    .UseInMemoryDatabase(dbName)
                     .Options;
         }
     }
