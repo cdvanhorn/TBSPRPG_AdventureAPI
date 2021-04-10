@@ -31,8 +31,7 @@ namespace AdventureApi.Controllers {
             return Ok(adventure);
         }
 
-        [Authorize]
-        [Route("initiallocation/{id}")]
+        [Authorize, Route("initiallocation/{id}")]
         public async Task<IActionResult> GetInitialLocation(string id) {
             var loc = await _locationService.GetInitialForLocation(id);
             if(loc == null)
