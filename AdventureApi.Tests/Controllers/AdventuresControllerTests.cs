@@ -159,14 +159,14 @@ namespace AdventureApi.Tests.Controllers
             var controller = CreateController(context);
             
             //act
-            var result = await controller.GetInitialLocation(_testAdventureId.ToString());
+            var result = await controller.GetInitialLocation(_testAdventureId);
             
             //assert
             var okObjectResult = result as OkObjectResult;
             Assert.NotNull(okObjectResult);
             var location = okObjectResult.Value as LocationViewModel;
             Assert.NotNull(location);
-            Assert.Equal(_testAdventureId.ToString(), location.AdventureId);
+            Assert.Equal(_testAdventureId, location.AdventureId);
         }
         
         [Fact]
@@ -176,7 +176,7 @@ namespace AdventureApi.Tests.Controllers
             var controller = CreateController(context);
             
             //act
-            var result = await controller.GetInitialLocation(_testAdventure2Id.ToString());
+            var result = await controller.GetInitialLocation(_testAdventure2Id);
             
             //assert
             var badRequestResult = result as BadRequestObjectResult;

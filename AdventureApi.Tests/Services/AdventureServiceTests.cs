@@ -60,7 +60,7 @@ namespace AdventureApi.Tests.Services
             
             //assert
             Assert.Equal(2, adventures.Count);
-            Assert.Equal(_testAdventureId.ToString(), adventures[0].Id);
+            Assert.Equal(_testAdventureId, adventures[0].Id);
             Assert.Equal("TestOne", adventures[0].Name);
             Assert.Equal("TestTwo", adventures[1].Name);
         }
@@ -79,7 +79,7 @@ namespace AdventureApi.Tests.Services
             
             //assert
             Assert.NotNull(adventure);
-            Assert.Equal(_testAdventureId.ToString(), adventure.Id);
+            Assert.Equal(_testAdventureId, adventure.Id);
             Assert.Equal("TestOne", adventure.Name);
         }
 
@@ -139,7 +139,7 @@ namespace AdventureApi.Tests.Services
             
             //assert
             Assert.NotNull(adventure);
-            Assert.Equal(_testAdventureId.ToString(), adventure.Id);
+            Assert.Equal(_testAdventureId, adventure.Id);
             Assert.Equal("TestOne", adventure.Name);
         }
 
@@ -155,7 +155,7 @@ namespace AdventureApi.Tests.Services
             
             //assert
             Assert.NotNull(adventure);
-            Assert.Equal(_testAdventureId.ToString(), adventure.Id);
+            Assert.Equal(_testAdventureId, adventure.Id);
             Assert.Equal("TestOne", adventure.Name);
         }
         

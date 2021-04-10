@@ -101,10 +101,10 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var location = await service.GetInitialForLocation(_testAdventureId.ToString());
+            var location = await service.GetInitialForLocation(_testAdventureId);
 
             //assert
-            Assert.Equal(_testAdventureId.ToString(), location.AdventureId);
+            Assert.Equal(_testAdventureId, location.AdventureId);
         }
         
         [Fact]
@@ -115,7 +115,7 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var location = await service.GetInitialForLocation(Guid.NewGuid().ToString());
+            var location = await service.GetInitialForLocation(Guid.NewGuid());
 
             //assert
             Assert.Null(location);
@@ -129,7 +129,7 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var location = await service.GetInitialForLocation(_testAdventure2Id.ToString());
+            var location = await service.GetInitialForLocation(_testAdventure2Id);
 
             //assert
             Assert.Null(location);
@@ -143,7 +143,7 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var location = await service.GetInitialForLocation(_testAdventure3Id.ToString());
+            var location = await service.GetInitialForLocation(_testAdventure3Id);
 
             //assert
             Assert.Null(location);

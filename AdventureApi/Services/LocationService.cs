@@ -7,7 +7,7 @@ using System;
 
 namespace AdventureApi.Services {
     public interface ILocationService {
-        Task<LocationViewModel> GetInitialForLocation(string id);
+        Task<LocationViewModel> GetInitialForLocation(Guid id);
     }
 
     public class LocationService : ILocationService{
@@ -17,10 +17,8 @@ namespace AdventureApi.Services {
             _locationRepository = locationRepository;
         }
 
-        public async Task<LocationViewModel> GetInitialForLocation(string id) {
-            if(!Guid.TryParse(id, out _))
-                return null;
-            var location = await _locationRepository.GetInitialForAdventure(Guid.Parse(id));
+        public async Task<LocationViewModel> GetInitialForLocation(Guid id) {
+            var location = await _locationRepository.GetInitialForAdventure(id);
             return location == null ? null : new LocationViewModel(location);
         }
     }
