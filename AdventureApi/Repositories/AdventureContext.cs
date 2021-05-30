@@ -8,6 +8,8 @@ namespace AdventureApi.Repositories {
         public DbSet<Adventure> Adventures { get; set; }
 
         public DbSet<Location> Locations { get; set; }
+        
+        public DbSet<Route> Routes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
