@@ -15,6 +15,7 @@ namespace AdventureApi.Repositories {
 
             modelBuilder.Entity<Adventure>().ToTable("adventures");
             modelBuilder.Entity<Location>().ToTable("locations");
+            modelBuilder.Entity<Route>().ToTable("routes");
 
             modelBuilder.Entity<Adventure>().HasKey(a => a.Id);
             modelBuilder.Entity<Adventure>().Property(a => a.Id)
@@ -27,11 +28,22 @@ namespace AdventureApi.Repositories {
                 .HasColumnType("uuid")
                 .HasDefaultValueSql("uuid_generate_v4()")
                 .IsRequired();
+            
+            modelBuilder.Entity<Route>().HasKey(a => a.Id);
+            modelBuilder.Entity<Route>().Property(a => a.Id)
+                .HasColumnType("uuid")
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .IsRequired();
 
             modelBuilder.Entity<Adventure>()
                  .HasMany(a => a.Locations)
                  .WithOne(l => l.Adventure)
-                 .HasForeignKey(l => l.AdventureId);            
+                 .HasForeignKey(l => l.AdventureId);
+
+            modelBuilder.Entity<Location>()
+                .HasMany(l => l.Routes)
+                .WithOne(r => r.Location)
+                .HasForeignKey(r => r.LocationId);
         }
     }
 }

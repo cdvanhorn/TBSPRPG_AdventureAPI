@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AdventureApi.Entities {
     public class Location {
@@ -9,5 +10,7 @@ namespace AdventureApi.Entities {
         public Guid AdventureId { get; set; }
 
         public Adventure Adventure { get; set; }
+        
+        public ICollection<Route> Routes { get; set; }
     }
 }
