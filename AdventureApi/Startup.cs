@@ -36,6 +36,8 @@ namespace AdventureApi
             services.AddScoped<IAdventuresRepository, AdventuresRepository>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IRouteService, RouteService>();
+            services.AddScoped<IRouteRepository, RouteRepository>();
 
             var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
