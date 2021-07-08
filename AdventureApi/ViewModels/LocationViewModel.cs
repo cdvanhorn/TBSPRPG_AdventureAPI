@@ -6,12 +6,15 @@ namespace AdventureApi.ViewModels {
         public Guid Id { get; set; }
 
         public Guid AdventureId { get; set; }
+        
+        public Guid SourceKey { get; set; }
 
         public LocationViewModel() {}
 
         public LocationViewModel(Location location) {
             Id = location.Id;
             AdventureId = location.AdventureId;
+            SourceKey = location.SourceKey;
         }
     }
 }

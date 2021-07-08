@@ -10,7 +10,7 @@ namespace AdventureApi.Entities
         
         public Location Location { get; set; }
         
-        public Guid SourceId { get; set; }
+        public Guid SourceKey { get; set; }
         
         public string Name { get; set; }
     }
