@@ -10,6 +10,7 @@ namespace AdventureApi.ViewModels
             Id = route.Id;
             LocationId = route.LocationId;
             Name = route.Name;
+            SourceId = route.SourceId;
         }
         
         public Guid Id { get; set; }
