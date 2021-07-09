@@ -31,7 +31,7 @@ namespace AdventureApi.Repositories
             
             if (language == Languages.SPANISH)
             {
-                query = _context.SourcesEn.AsQueryable();
+                query = _context.SourcesEsp.AsQueryable();
             }
 
             if (query != null)
