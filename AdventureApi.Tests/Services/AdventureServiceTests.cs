@@ -75,7 +75,7 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var adventure = await service.GetById(_testAdventureId.ToString());
+            var adventure = await service.GetById(_testAdventureId);
             
             //assert
             Assert.NotNull(adventure);
@@ -91,39 +91,12 @@ namespace AdventureApi.Tests.Services
             var service = CreateService(context);
             
             //act
-            var adventure = await service.GetById(Guid.NewGuid().ToString());
+            var adventure = await service.GetById(Guid.NewGuid());
             
             //assert
             Assert.Null(adventure);
         }
         
-        [Fact]
-        public async Task GetAdventureById_InvalidNotGuid_ReturnNothing()
-        {
-            //arrange
-            await using var context = new AdventureContext(_dbContextOptions);
-            var service = CreateService(context);
-            
-            //act
-            var adventure = await service.GetById("banana tom");
-            
-            //assert
-            Assert.Null(adventure);
-        }
-
-        [Fact]
-        public async Task GetAdventureById_Empty_ReturnNothing()
-        {
-            //arrange
-            await using var context = new AdventureContext(_dbContextOptions);
-            var service = CreateService(context);
-            
-            //act
-            var adventure = await service.GetById("");
-            
-            //assert
-            Assert.Null(adventure);
-        }
         #endregion
         
         #region GetAdventureByName

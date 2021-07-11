@@ -18,6 +18,7 @@ namespace AdventureApi.Tests.Controllers
         private Guid _testAdventureId;
         private Guid _testAdventure2Id;
         private Guid _testAdventure3Id;
+        private readonly Guid _testSourceKey = Guid.NewGuid();
         
         public AdventuresControllerTests() : base("AdventuresControllerTests")
         {
@@ -49,7 +50,8 @@ namespace AdventureApi.Tests.Controllers
                         AdventureId = _testAdventureId
                     }
                 },
-                Name = "TestOne"
+                Name = "TestOne",
+                SourceKey = _testSourceKey
             };
             
 
@@ -183,6 +185,45 @@ namespace AdventureApi.Tests.Controllers
             Assert.NotNull(badRequestResult);
             Assert.Equal(400, badRequestResult.StatusCode);
         }
+        #endregion
+
+        #region GetAdventureById
+
+        [Fact]
+        public async void GetAdventureById_Valid_ReturnOne()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var controller = CreateController(context);
+            
+            //act
+            var result = await controller.GetAdventureById(_testAdventureId);
+            
+            //assert
+            var okObjectResult = result as OkObjectResult;
+            Assert.NotNull(okObjectResult);
+            var adventure = okObjectResult.Value as AdventureViewModel;
+            Assert.NotNull(adventure);
+            Assert.Equal("TestOne", adventure.Name);
+            Assert.Equal(_testSourceKey, adventure.SourceKey);
+        }
+
+        [Fact]
+        public async void GetAdventureById_Invalid_BadRequest()
+        {
+            //arrange
+            await using var context = new AdventureContext(_dbContextOptions);
+            var controller = CreateController(context);
+            
+            //act
+            var result = await controller.GetAdventureById(Guid.NewGuid());
+            
+            //assert
+            var badRequestResult = result as BadRequestObjectResult;
+            Assert.NotNull(badRequestResult);
+            Assert.Equal(400, badRequestResult.StatusCode);
+        }
+
         #endregion
     }
     

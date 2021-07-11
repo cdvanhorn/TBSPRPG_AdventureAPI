@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using AdventureApi.Services;
 
 using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
+using AdventureApi.ViewModels;
 
 namespace AdventureApi.Controllers {
 
@@ -21,7 +23,8 @@ namespace AdventureApi.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _adventuresService.GetAll());
+            var adventures = await _adventuresService.GetAll();
+            return Ok(adventures.Select(adv => new AdventureViewModel(adv)).ToList());
         }
 
         [HttpGet("{name}")]
@@ -29,7 +32,16 @@ namespace AdventureApi.Controllers {
             var adventure = await _adventuresService.GetByName(name);
             if(adventure == null)
                 return BadRequest(new { message = "invalid adventure name" });
-            return Ok(adventure);
+            return Ok(new AdventureViewModel(adventure));
+        }
+
+        [HttpGet("{adventureId:guid}")]
+        public async Task<IActionResult> GetAdventureById(Guid adventureId)
+        {
+            var adventure = await _adventuresService.GetById(adventureId);
+            if(adventure == null)
+                return BadRequest(new { message = "invalid adventure id" });
+            return Ok(new AdventureViewModel(adventure));
         }
 
         [Authorize, Route("initiallocation/{id}")]

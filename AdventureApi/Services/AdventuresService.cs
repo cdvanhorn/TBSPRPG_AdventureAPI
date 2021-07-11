@@ -1,18 +1,14 @@
-using AdventureApi.Entities;
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
-
+using AdventureApi.Entities;
 using AdventureApi.Repositories;
-using AdventureApi.ViewModels;
 
 namespace AdventureApi.Services {
     public interface IAdventuresService {
-        Task<List<AdventureViewModel>> GetAll();
-        Task<AdventureViewModel> GetByName(string name);
-        ValueTask<AdventureViewModel> GetById(string id);
+        Task<List<Adventure>> GetAll();
+        Task<Adventure> GetByName(string name);
+        ValueTask<Adventure> GetById(Guid id);
     }
 
     public class AdventuresService : IAdventuresService {
@@ -22,21 +18,16 @@ namespace AdventureApi.Services {
             _adventuresRepository = adventuresRepository;
         }
         
-        public async Task<List<AdventureViewModel>> GetAll() {
-            var adventures = await _adventuresRepository.GetAllAdventures();
-            return adventures.Select(adv => new AdventureViewModel(adv)).ToList();
+        public async Task<List<Adventure>> GetAll() {
+            return await _adventuresRepository.GetAllAdventures();
         }
 
-        public async Task<AdventureViewModel> GetByName(string name) {
-            var adventure = await _adventuresRepository.GetAdventureByName(name);
-            return adventure == null ? null : new AdventureViewModel(adventure);
+        public async Task<Adventure> GetByName(string name) {
+            return await _adventuresRepository.GetAdventureByName(name);
         }
 
-        public async ValueTask<AdventureViewModel> GetById(string id) {
-            if(!Guid.TryParse(id, out _))
-                return null;
-            var adventure = await _adventuresRepository.GetAdventureById(Guid.Parse(id));
-            return adventure == null ? null : new AdventureViewModel(adventure);
+        public async ValueTask<Adventure> GetById(Guid id) {
+            return await _adventuresRepository.GetAdventureById(id);
         }
     }
 }
